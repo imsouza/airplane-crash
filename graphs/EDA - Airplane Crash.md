@@ -495,7 +495,7 @@ title='Count of crashes by Decade', marker=".")
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea99209490>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd38be304d0>
 
 
 
@@ -514,7 +514,7 @@ crashes_by_year.plot(figsize=[12, 6], title='Count of crashes by Year', marker="
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea98976850>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd38b3a8210>
 
 
 
@@ -534,7 +534,7 @@ date_day.value_counts().plot(kind='barh', figsize=[12, 6], title='Count of crash
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea9882d490>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd38b454310>
 
 
 
@@ -556,7 +556,7 @@ date_month['Month'].value_counts().plot(kind='barh',figsize=[12, 6], title='Coun
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea9871c610>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd38b344450>
 
 
 
@@ -616,7 +616,7 @@ pd.Series(
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea98389f90>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd38afafe50>
 
 
 
@@ -638,7 +638,7 @@ kind='bar',figsize=[12, 6], title='Count of hijacked planes crashed by year')
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea983b30d0>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd38b083490>
 
 
 
@@ -659,7 +659,7 @@ kind='bar',figsize=[12, 6], title='Count of missing planes by year')
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea972d2310>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd389eed2d0>
 
 
 
@@ -679,7 +679,7 @@ kind='bar',figsize=[12, 6], title='Brazilian plane crash by operator')
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea9729b810>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd389ec9910>
 
 
 
@@ -696,7 +696,7 @@ kind='bar',figsize=[12, 6], title='Brazilian plane crash by type')
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea971dee50>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd389e07850>
 
 
 
@@ -742,7 +742,7 @@ sns.distplot(data['Time'], hist=True, bins=30, rug=True, axlabel="Time")
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea96ed7f10>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd389af1650>
 
 
 
@@ -953,7 +953,7 @@ sns.distplot(ww_concat['Year'], hist=True, rug=True, axlabel="Plane crashes in W
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea96161910>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd388daa150>
 
 
 
@@ -1203,7 +1203,7 @@ sns.pairplot(grangers)
 
 
 
-    <seaborn.axisgrid.PairGrid at 0x7fea94492a50>
+    <seaborn.axisgrid.PairGrid at 0x7fd388075b50>
 
 
 
@@ -1219,7 +1219,7 @@ sns.pairplot(data_causality)
 
 
 
-    <seaborn.axisgrid.PairGrid at 0x7fea8f13bbd0>
+    <seaborn.axisgrid.PairGrid at 0x7fd381d73290>
 
 
 
@@ -1271,8 +1271,12 @@ nx.draw(G, pos, edge_cmap=plt.cm.Blues, with_labels=True, **options)
 plt.savefig("graph_aboard_fatalities_date.pdf")
 ```
 
+    /home/imsouza/anaconda3/lib/python3.7/site-packages/networkx/drawing/nx_pylab.py:613: MatplotlibDeprecationWarning: Support for uppercase single-letter colors is deprecated since Matplotlib 3.1 and will be removed in 3.3; please use lowercase instead.
+      alpha=alpha
 
-![png](output_69_0.png)
+
+
+![png](output_69_1.png)
 
 
 
@@ -1319,7 +1323,7 @@ data_causality_updated.plot(kind='line')
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea85810450>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd379d1d850>
 
 
 
@@ -1341,10 +1345,227 @@ sns.scatterplot(
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7fea7458f550>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7fd380238b50>
 
 
 
 
 ![png](output_76_1.png)
+
+
+# Principal component analysis
+
+> Principal component analysis (PCA) is a popular technique for analyzing large datasets containing a high number of dimensions/features per observation, increasing the interpretability of data while preserving the maximum amount of information, and enabling the visualization of multidimensional data. Formally, PCA is a statistical technique for reducing the dimensionality of a dataset. This is accomplished by linearly transforming the data into a new coordinate system where (most of) the variation in the data can be described with fewer dimensions than the initial data. Many studies use the first two principal components in order to plot the data in two dimensions and to visually identify clusters of closely related data points. Principal component analysis has applications in many fields such as population genetics, microbiome studies, and atmospheric science.
+
+
+```python
+from sklearn.preprocessing import StandardScaler
+
+def data_scaling(dataframe,inverse=False):
+    scaler=StandardScaler()
+    
+    if inverse == False:
+        return scaler.fit_transform(dataframe)
+    else:
+        scaler.fit(dataframe)
+        return scaler.inverse_transform(dataframe)
+```
+
+
+```python
+data_causality_updated_scaled = data_scaling(data_causality_updated)
+```
+
+
+```python
+from sklearn.decomposition import PCA
+
+pca = PCA(n_components=3)
+principal_comp = pca.fit_transform(data_causality_updated_scaled)
+principal_comp
+```
+
+
+
+
+    array([[-2.0192702 ,  2.59357829,  0.07587571],
+           [-1.76296813,  2.41063652,  0.02962811],
+           [-1.92242695,  2.27845596,  0.04286652],
+           ...,
+           [ 0.20494602, -1.49383433, -0.14271906],
+           [-0.09165915, -1.61816802,  0.17404469],
+           [ 1.57771486, -0.96422486, -0.25767314]])
+
+
+
+
+```python
+pca_df = pd.DataFrame(data = principal_comp, columns =['pca1','pca2', 'pca3'])
+pca_df.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pca1</th>
+      <th>pca2</th>
+      <th>pca3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-2.019270</td>
+      <td>2.593578</td>
+      <td>0.075876</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-1.762968</td>
+      <td>2.410637</td>
+      <td>0.029628</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.922427</td>
+      <td>2.278456</td>
+      <td>0.042867</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.201309</td>
+      <td>2.551708</td>
+      <td>0.128444</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.595417</td>
+      <td>2.790412</td>
+      <td>-0.068256</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+from sklearn.cluster import KMeans
+
+kmeans = KMeans(3)
+kmeans.fit(data_causality_updated_scaled)
+
+pca_df = pd.concat([pca_df,pd.DataFrame({'cluster':kmeans.labels_})], axis = 1)
+pca_df.head()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pca1</th>
+      <th>pca2</th>
+      <th>pca3</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>-2.019270</td>
+      <td>2.593578</td>
+      <td>0.075876</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-1.762968</td>
+      <td>2.410637</td>
+      <td>0.029628</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-1.922427</td>
+      <td>2.278456</td>
+      <td>0.042867</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.201309</td>
+      <td>2.551708</td>
+      <td>0.128444</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>-0.595417</td>
+      <td>2.790412</td>
+      <td>-0.068256</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+plt.figure(figsize=(10,10))
+ax = sns.scatterplot(x="pca1", y="pca2", hue = "cluster", data = pca_df, palette =['red','green','blue'])
+plt.show()
+```
+
+
+![png](output_84_0.png)
+
+
+
+```python
+pca.explained_variance_ratio_
+```
+
+
+
+
+    array([0.66393762, 0.28517372, 0.05088866])
+
 
